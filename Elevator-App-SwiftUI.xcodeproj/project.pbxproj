@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0428094A2C67C7C800C1C592 /* Elevator_App_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042809492C67C7C800C1C592 /* Elevator_App_SwiftUIApp.swift */; };
-		0428094C2C67C7C800C1C592 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0428094B2C67C7C800C1C592 /* ContentView.swift */; };
+		0428094C2C67C7C800C1C592 /* ElevatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0428094B2C67C7C800C1C592 /* ElevatorView.swift */; };
 		0428094E2C67C7CB00C1C592 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0428094D2C67C7CB00C1C592 /* Assets.xcassets */; };
 		042809512C67C7CB00C1C592 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 042809502C67C7CB00C1C592 /* Preview Assets.xcassets */; };
 		0428095B2C67C7CC00C1C592 /* Elevator_App_SwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0428095A2C67C7CC00C1C592 /* Elevator_App_SwiftUITests.swift */; };
@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		042809462C67C7C800C1C592 /* Elevator-App-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Elevator-App-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		042809492C67C7C800C1C592 /* Elevator_App_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elevator_App_SwiftUIApp.swift; sourceTree = "<group>"; };
-		0428094B2C67C7C800C1C592 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0428094B2C67C7C800C1C592 /* ElevatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElevatorView.swift; sourceTree = "<group>"; };
 		0428094D2C67C7CB00C1C592 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		042809502C67C7CB00C1C592 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		042809562C67C7CC00C1C592 /* Elevator-App-SwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Elevator-App-SwiftUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				042809492C67C7C800C1C592 /* Elevator_App_SwiftUIApp.swift */,
-				0428094B2C67C7C800C1C592 /* ContentView.swift */,
+				0428094B2C67C7C800C1C592 /* ElevatorView.swift */,
 				0428094D2C67C7CB00C1C592 /* Assets.xcassets */,
 				0428094F2C67C7CB00C1C592 /* Preview Content */,
 			);
@@ -257,7 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0428094C2C67C7C800C1C592 /* ContentView.swift in Sources */,
+				0428094C2C67C7C800C1C592 /* ElevatorView.swift in Sources */,
 				0428094A2C67C7C800C1C592 /* Elevator_App_SwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Passenger: Identifiable {
     let id = UUID()
@@ -14,23 +15,37 @@ struct Floor {
 struct ElevatorView: View {
     @State private var currentFloor = 1
     let totalFloors = 10
-    let floorHeight: CGFloat = 50
+    
+    // Dynamically calculate floorHeight based on screen height
+    var floorHeight: CGFloat {
+        let screenHeight = UIScreen.main.bounds.height
+        let keyWindow = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+        
+        let safeAreaInsets = keyWindow?.safeAreaInsets ?? UIEdgeInsets()
+        let safeAreaHeight = screenHeight - safeAreaInsets.top - safeAreaInsets.bottom
+        return safeAreaHeight / CGFloat(totalFloors)
+    }
+
+    
     @State private var isMoving = false
     
     // Predefined passengers and their destinations
     @State private var elevatorPassengers: [Passenger] = []
     
     @State private var floors: [Floor] = [
-        Floor(floorNumber: 1, waitingPassengers: [Passenger(currentFloor: 1, destinationFloor: 2)]),
-        Floor(floorNumber: 2, waitingPassengers: [Passenger(currentFloor: 2, destinationFloor: 5)]),
-        Floor(floorNumber: 10, waitingPassengers: [Passenger(currentFloor: 10, destinationFloor: 1)]),
+        Floor(floorNumber: 1, waitingPassengers: []),
+        Floor(floorNumber: 2, waitingPassengers: []),
         Floor(floorNumber: 3, waitingPassengers: []),
         Floor(floorNumber: 4, waitingPassengers: []),
         Floor(floorNumber: 5, waitingPassengers: []),
         Floor(floorNumber: 6, waitingPassengers: []),
         Floor(floorNumber: 7, waitingPassengers: []),
         Floor(floorNumber: 8, waitingPassengers: []),
-        Floor(floorNumber: 9, waitingPassengers: [])
+        Floor(floorNumber: 9, waitingPassengers: []),
+        Floor(floorNumber: 10, waitingPassengers: [])
     ]
     
     @State private var moveIndex = 0
@@ -60,7 +75,7 @@ struct ElevatorView: View {
                             VStack {
                                 // Inside the elevator
                                 ForEach(elevatorPassengers, id: \.id) { passenger in
-                                    Text("To \(passenger.destinationFloor)")
+                                    Text("\(passenger.destinationFloor)")
                                         .padding(5)
                                         .background(Color.orange)
                                         .cornerRadius(5)
@@ -98,20 +113,6 @@ struct ElevatorView: View {
             }
             .padding()
             .frame(height: floorHeight * CGFloat(totalFloors)) // Ensure the entire view is of consistent height
-            
-            // Play button to start the elevator movement
-            Button(action: {
-                startElevator()
-            }) {
-                Text("Play")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(isMoving ? Color.gray : Color.blue)
-                    .cornerRadius(10)
-            }
-            .disabled(isMoving) // Disable button while elevator is moving
-            .padding(.top, 20)
         }
         .onAppear {
             // Ensure the elevator starts at the bottom floor
@@ -120,65 +121,15 @@ struct ElevatorView: View {
     }
     
     func startElevator() {
-        isMoving = true
-        planElevatorRoute()
     }
     
     func planElevatorRoute() {
-        // Check each floor from 1 to 10
-        for floor in 1...totalFloors {
-            if let floorIndex = floors.firstIndex(where: { $0.floorNumber == floor }), !floors[floorIndex].waitingPassengers.isEmpty {
-                travelPlan.append(floor)
-                for passenger in floors[floorIndex].waitingPassengers {
-                    travelPlan.append(passenger.destinationFloor)
-                }
-            }
-        }
-        
-        // Remove duplicates and sort the travel plan
-        travelPlan = Array(Set(travelPlan)).sorted()
-        
-        moveElevator()
     }
     
     func moveElevator() {
-        if moveIndex < travelPlan.count {
-            let nextDestination = travelPlan[moveIndex]
-            
-            withAnimation(.easeInOut(duration: 1.0)) {
-                currentFloor = nextDestination
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                handlePassengers()
-                moveIndex += 1
-                moveElevator() // Move to the next destination
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                // Reset to floor 1 after all passengers have reached their destinations
-                withAnimation(.easeInOut(duration: 1.0)) {
-                    currentFloor = 1
-                }
-                moveIndex = 0
-                travelPlan.removeAll()
-                isMoving = false // Re-enable the Play button
-            }
-        }
     }
     
     func handlePassengers() {
-        // Handle passengers entering or exiting the elevator
-        if let floorIndex = floors.firstIndex(where: { $0.floorNumber == currentFloor }) {
-            // Passengers enter the elevator
-            elevatorPassengers.append(contentsOf: floors[floorIndex].waitingPassengers)
-            floors[floorIndex].waitingPassengers.removeAll()
-        }
-        
-        // Passengers exit the elevator
-        elevatorPassengers.removeAll { passenger in
-            passenger.destinationFloor == currentFloor
-        }
     }
 }
 
